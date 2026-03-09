@@ -10,5 +10,5 @@ app.set("view engine", "pug");
 route(app)
 // Chạy server
 app.listen(port, () => {
-    console.log(`Server đang chạy tại http://localhost:${port}`);
+    console.log(`Server đang chạy tại trang này http://localhost:${port}`);
 });
