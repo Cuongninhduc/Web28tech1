@@ -9,6 +9,8 @@ const route = require("./routes/client/indexroutes.js")
 app.set("views", "./views");
 app.set("view engine", "pug");
 
+// Nhúng file tĩnh
+app.use(express.static("public"));
 route(app)
 // Chạy server
 app.listen(port, () => {
