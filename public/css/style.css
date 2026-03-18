@@ -24,3 +24,7 @@
 .header .inner-menu > ul > li{
     margin-left: 23px;
 }
+.inner-image img{
+    max-height: 100px;
+    max-width: 220px;
+}
