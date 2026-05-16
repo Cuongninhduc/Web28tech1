@@ -29,11 +29,17 @@ module.exports.index = async (req, res) => {
     }
     
     let find= {
-        deleted: false
+        deleted: false,
     }
     
     if (req.query.status) {
         find.status = req.query.status
+    }
+    let keyword = ""
+    if (req.query.keyword){
+        keyword = req.query.keyword;
+        const regex = new RegExp(keyword, "i");  //Tìm kiếm gần đúng
+        find.title = regex;
     }
     const products = await Product.find(find)
     // console.log(products);
@@ -41,6 +47,7 @@ module.exports.index = async (req, res) => {
     res.render("admin/pages/products/index", {
         pageTitle: "DS san pham",
         products: products, //truyền data ra ngoài giao diện
-        filterstatus: filterstatus
+        filterstatus: filterstatus,
+        keyword: keyword
     });
 }
