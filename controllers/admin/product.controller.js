@@ -2,12 +2,13 @@
 const Product = require("../../models/productmodel");
 
 const filterstatusHelper = require("../../helpers/filterstatus")
+const searchHelper = require("../../helpers/search")
 
 
 module.exports.index = async (req, res) => {
 // Bộ lọc    
     const filterstatus = filterstatusHelper(req.query)
-    console.log(filterstatus)
+    
 // Hết bộ lọc
     
     let find= {
@@ -17,12 +18,17 @@ module.exports.index = async (req, res) => {
     if (req.query.status) {
         find.status = req.query.status
     }
+
+// Tìm kiếm
+    const objectSearch = searchHelper(req.query);
+
     let keyword = ""
-    if (req.query.keyword){
-        keyword = req.query.keyword;
-        const regex = new RegExp(keyword, "i");  //Tìm kiếm gần đúng
-        find.title = regex;  //Tìm bản ghi có title là ...
+    if (objectSearch.regex){
+         //Tìm kiếm gần đúng
+        find.title = objectSearch.regex;  //Tìm bản ghi có title là ...
     }
+// Hết tìm kiếm
+
     const products = await Product.find(find)
     // console.log(products);
 
