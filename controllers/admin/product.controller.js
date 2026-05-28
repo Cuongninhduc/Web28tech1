@@ -3,7 +3,7 @@ const Product = require("../../models/productmodel");
 
 const filterstatusHelper = require("../../helpers/filterstatus")
 const searchHelper = require("../../helpers/search")
-
+const paginationHelper = require("../../helpers/pagination")
 
 module.exports.index = async (req, res) => {
 // Bộ lọc    
@@ -30,19 +30,22 @@ module.exports.index = async (req, res) => {
 // Hết tìm kiếm
 
 // Phân trang
-    let objectPagi = {
+    const countpro = await Product.countDocuments(find) // Đếm số sản phẩm
+    let objectPagi = paginationHelper({
         currentPage: 1,
         limitItem: 4
-    }
+    },
+    req.query,
+    countpro)
 
-    if(req.query.page){
-        objectPagi.currentPage = parseInt(req.query.page)
-    }
-    objectPagi.skip = (objectPagi.currentPage - 1)*objectPagi.limitItem //Bỏ qua bao nhiêu sản phẩm
+    // if(req.query.page){
+    //     objectPagi.currentPage = parseInt(req.query.page)
+    // }
+    // objectPagi.skip = (objectPagi.currentPage - 1)*objectPagi.limitItem //Bỏ qua bao nhiêu sản phẩm
     
-    const countpro = await Product.countDocuments(find) // Đếm số sản phẩm
-    const totalpage = Math.ceil(countpro/objectPagi.limitItem) // Số trang đc phân
-    objectPagi.totalpage = totalpage // add thêm vào objectPagi
+    // const countpro = await Product.countDocuments(find) // Đếm số sản phẩm
+    // const totalpage = Math.ceil(countpro/objectPagi.limitItem) // Số trang đc phân
+    // objectPagi.totalpage = totalpage // add thêm vào objectPagi
 // Phân trang
 
     const products = await Product.find(find).limit(objectPagi.limitItem).skip(objectPagi.skip)
