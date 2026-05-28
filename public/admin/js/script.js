@@ -34,3 +34,16 @@ if(formSearch){
         window.location.href = url.href;
     })
 }
+// Bắt event phân trang
+
+const btnPagi = document.querySelectorAll("[button-pagi]")
+if(btnPagi) {
+    let url = new URL(window.location.href)
+    btnPagi.forEach(button => {
+        button.addEventListener("click", () => {
+            const page = button.getAttribute("button-pagi")
+            url.searchParams.set("page",page);
+            window.location.href = url.href
+        })
+    })
+}
