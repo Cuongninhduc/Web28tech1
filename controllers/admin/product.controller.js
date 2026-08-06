@@ -60,3 +60,16 @@ module.exports.index = async (req, res) => {
     });
 }
 // Phân trang
+
+// /admin/products/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    console.log(req.params)
+    const status = req.params.status
+    const id = req.params.id    
+    const currentPage = req.query.page || 2
+
+    await Product.updateOne({ _id: id}, { status: status})
+
+    res.redirect(req.get("Referer"));
+
+}

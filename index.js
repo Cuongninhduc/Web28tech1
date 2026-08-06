@@ -1,10 +1,13 @@
 const express = require("express");
+const methodOverride = require("method-override")
 require("dotenv").config();
 
 const database = require("./config/databasse.js")
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(methodOverride("_method"))
 
 const systemConfig = require("./config/system");
 
@@ -29,3 +32,4 @@ routeAdmin(app)
 app.listen(port, () => {
     console.log(`Server đang chạy tại trang này http://localhost:${port}`);
 });
+
