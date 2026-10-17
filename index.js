@@ -12,9 +12,13 @@ app.use(methodOverride("_method"))
 const systemConfig = require("./config/system");
 
 const routeAdmin = require("./routes/admin/index.route")
-const route = require("./routes/client/indexroutes.js")
+const route = require("./routes/client/indexroutes.js");
+const bodyParser = require("body-parser");
 
 database.connect();
+
+// parse application/x-www-form-urlencode
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.set("views", "./views");
 app.set("view engine", "pug");

@@ -47,3 +47,60 @@ if(btnPagi) {
         })
     })
 }
+
+//Checkbox multi
+const checkboxMulti = document.querySelector("[checkbox-multi]")
+if (checkboxMulti){
+    const inputCheckall = checkboxMulti.querySelector("input[name='checkall']")
+    const inputid = checkboxMulti.querySelectorAll("input[name='id']")
+
+    inputCheckall.addEventListener("click", () => {
+        if(inputCheckall.checked){
+            inputid.forEach(input => {
+                input.checked = true;
+            })
+        } else {
+            inputid.forEach(input => {
+                input.checked = false
+            })
+        }})
+
+    inputid.forEach(input => {
+        input.addEventListener("click", () => {
+            const countcheck = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
+
+            if (countcheck == inputid.length){
+                inputCheckall.checked = true
+            } else {
+                inputCheckall.checked = false
+            }
+        })
+    })
+}
+
+//form change multi
+const formchangemulti = document.querySelector("[form-change-multi]")
+if (formchangemulti) {
+    formchangemulti.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const checkboxMulti = document.querySelector("[checkbox-multi]")
+        const inputsChecked = checkboxMulti.querySelectorAll(
+            "input[name='id']:checked"
+        );
+
+        if(inputsChecked.length > 0){
+            let ids = [];
+            const inputIds = formchangemulti.querySelector("input[name='ids']")
+
+            inputsChecked.forEach(input => {
+                const id = input.value;
+                ids.push(id);
+            })
+            inputIds.value = ids.join(". ");
+            formchangemulti.submit();
+        } else {
+            alert("Chon it nhat 1 ban ghi")
+        }
+    })
+}
